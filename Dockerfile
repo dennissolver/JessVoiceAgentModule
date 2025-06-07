@@ -1,26 +1,23 @@
-# Multi-stage Dockerfile: Build frontend, serve backend
-FROM node:18 AS frontend-builder
-WORKDIR /app
-COPY frontend ./frontend
-RUN cd frontend && npm install && npm run build
+# === Stage 1: Build backend ===
+FROM python:3.11-slim AS backend-builder
 
-FROM python:3.12-slim AS backend
 WORKDIR /app
 
-# Install backend dependencies
-COPY requirements.txt ./
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy backend and built frontend
 COPY backend ./backend
-COPY setup_env.py .
-COPY launch_backend.py .
-COPY launch_frontend.py .
-COPY launch.py .
-COPY railway.json .
-COPY .env .
-COPY .env.local .
-COPY --from=frontend-builder /app/frontend/out ./frontend_build
 
+# === Stage 2: Final image ===
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Copy backend from previous stage
+COPY --from=backend-builder /app /app
+
+# Expose the FastAPI backend port
 EXPOSE 8000
-CMD ["python", "launch.py"]
+
+# Use Railway-injected environment variables
+CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
