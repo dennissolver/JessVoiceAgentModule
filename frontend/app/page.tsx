@@ -19,7 +19,7 @@ export default function Home() {
         recognition.lang = "en-US";
         recognition.interimResults = false;
 
-        recognition.onresult = async (event) => {
+        recognition.onresult = async (event: SpeechRecognitionEvent) => {
           try {
             const results = Array.from(event.results);
             const transcript = results
