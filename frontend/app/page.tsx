@@ -31,7 +31,8 @@ export default function Home() {
             console.log("🗣️ Final transcript:", transcript);
             console.log("📡 Sending to backend:", transcript);
 
-            const response = await fetch("http://localhost:8000/chat", {
+            const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "";
+            const response = await fetch(`${BACKEND_URL}/chat`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
