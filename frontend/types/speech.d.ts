@@ -21,4 +21,9 @@ declare global {
     SpeechRecognition: any;
     webkitSpeechRecognition: any;
   }
+    // Add this to frontend/types/speech.d.ts
+  interface SpeechRecognitionErrorEvent extends Event {
+    error: string;
+  }
+  
 }
