@@ -64,7 +64,7 @@ export default function Home() {
           }
         };
 
-        recognition.onerror = (event) => {
+        recognition.onerror = (event: SpeechRecognitionErrorEvent) => { ... }
           console.error("🎤 Speech error:", event);
           isRecognizing.current = false;
 
