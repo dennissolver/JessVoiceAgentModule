@@ -1,11 +1,11 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from backend.config import settings
-from backend.llm_router import query_llm
-from backend.tts import speak
-from backend.jess_chat.discovery_agent import handle_discovery_prompt
-from backend.jess_chat.memory import update_memory
+from config import settings
+from llm_router import query_llm
+from tts import speak
+from jess_chat.discovery_agent import handle_discovery_prompt
+from jess_chat.memory import update_memory
 
 app = FastAPI()
 
