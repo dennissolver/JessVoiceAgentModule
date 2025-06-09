@@ -1,7 +1,7 @@
-from backend.config import settings
-from backend.groq_client import call_groq
-from backend.openai_client import call_openai
-from backend.claude_client import call_claude
+from config import settings
+from groq_client import call_groq
+from openai_client import call_openai
+from claude_client import call_claude
 
 def query_llm(prompt: str, provider: str = None) -> str:
     provider = provider or settings.PRIMARY_LLM_PROVIDER.lower()
