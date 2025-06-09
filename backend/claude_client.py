@@ -1,5 +1,5 @@
 import requests
-from backend.config import settings
+from config import settings
 
 def call_claude(prompt: str) -> str:
     url = "https://api.anthropic.com/v1/messages"
