@@ -1,5 +1,5 @@
 import requests
-from backend.config import settings
+from config import settings
 
 def call_groq(prompt: str) -> str:
     url = "https://api.groq.com/openai/v1/chat/completions"
