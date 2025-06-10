@@ -10,7 +10,7 @@ VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID")
 
 
 def speak(text: str) -> str:
-    url = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}"
+    url = f"https://api.elevenlabs.io/v1/text-to-speech/{ELEVENLABS_VOICE_ID}"
 
     headers = {
         "xi-api-key": ELEVENLABS_API_KEY,
