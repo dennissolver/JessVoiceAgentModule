@@ -1,0 +1,18 @@
+
+project_name: JessVoiceAgent
+description: |
+  JessVoiceAgent is a voice-led AI discovery agent designed to guide users through structured business onboarding conversations using SPIN and MERRIT sales frameworks. The agent’s goal is to autonomously capture key operational insights and generate a tailored technical setup plan for the user's business project or software system.
+
+  Jess combines:
+    - Voice interaction powered by ElevenLabs
+    - Conversational intelligence using OpenAI GPT-4 (via LangGraph node transitions)
+    - Dynamic discovery logic, including clarification/reflection loops for vague inputs
+
+  The full system is structured as:
+    - A Next.js frontend (UI1 & UI2) for voice config and user onboarding
+    - A FastAPI backend handling TTS, STT, state management, and LangGraph orchestration
+    - A LangGraph-based agent engine (langgraph_jess.py) that routes Jess through conversation nodes like situation, problem, implication, need, metrics, risk, and timeline
+
+  Jess’s outputs are stored in ui2_data.json and compiled into generated_project_setup.json to inform project scaffolding or automation processes.
+
+  This project is part of the broader AI-Inside initiative, which embeds intelligent AI agents into existing business platforms to reduce admin overhead and accelerate operational onboarding.
