@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-from dotenv import set_key
 
 def prompt_env_var(key, description, default=None, optional=False):
     value = input(f"{description}{' [' + default + ']' if default else ''}: ").strip()
