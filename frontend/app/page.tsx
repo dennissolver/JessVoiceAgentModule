@@ -1,114 +1,61 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useState } from "react";
 
-export default function Home() {
-  const isRecognizing = useRef(false);
+export default function SetupPage() {
+  const [form, setForm] = useState({
+    ELEVENLABS_API_KEY: "",
+    ELEVENLABS_VOICE_ID: "",
+    ELEVENLABS_AGENT_ID: "",
+    GROQ_API_KEY: "",
+    OPENAI_API_KEY: "",
+    ANTHROPIC_API_KEY: "",
+    PRIMARY_LLM_PROVIDER: "groq",
+    LLM_FALLBACK: "",
+    NEXT_PUBLIC_PROJECT_NAME: "JessVoiceAgent",
+    NEXT_PUBLIC_BACKEND_URL: "http://localhost:8000",
+  });
+  const [status, setStatus] = useState<string | null>(null);
 
-  useEffect(() => {
-    async function initVoiceAgent() {
-      try {
-        await navigator.mediaDevices.getUserMedia({ audio: true });
-        console.log("✅ Microphone access granted");
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-        const SpeechRecognition =
-          window.SpeechRecognition || window.webkitSpeechRecognition;
-        const recognition = new SpeechRecognition();
-
-        recognition.continuous = true;
-        recognition.lang = "en-US";
-        recognition.interimResults = false;
-
-        recognition.onresult = async (event: SpeechRecognitionEvent) => {
-          try {
-            const results = Array.from(event.results);
-            const transcript = results
-              .map((r) => r[0].transcript)
-              .join(" ")
-              .trim();
-
-            if (!transcript) return;
-            console.log("🗣️ Final transcript:", transcript);
-            console.log("📡 Sending to backend:", transcript);
-
-            const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "";
-            const response = await fetch(`${BACKEND_URL}/chat`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                prompt: transcript,
-                session_id: "default",
-              }),
-            });
-
-            if (!response.ok) {
-              const errorText = await response.text();
-              console.error(`❌ Backend error ${response.status}:`, errorText);
-              return;
-            }
-
-            const data = await response.json();
-            console.log("🤖 Jess replied:", data.reply);
-            console.log("🔊 Audio base64 preview:", data.audio?.slice(0, 50));
-
-            if (data.audio) {
-              const audio = new Audio("data:audio/mp3;base64," + data.audio);
-              audio.play().catch((e) =>
-                console.error("🔈 Audio playback failed:", e)
-              );
-            } else {
-              console.warn("⚠️ No audio returned from backend.");
-            }
-          } catch (err) {
-            console.error("❌ Error processing recognition result:", err);
-          }
-        };
-
-        recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-          console.error("🎤 Speech error:", event);
-          isRecognizing.current = false;
-
-          if (
-            event.error === "no-speech" ||
-            event.error === "aborted" ||
-            event.error === "audio-capture"
-          ) {
-            console.log("🔁 Attempting to restart after error...");
-            try {
-              recognition.start();
-              isRecognizing.current = true;
-            } catch (e) {
-              console.warn("⚠️ Restart after error failed:", e);
-            }
-          }
-        };
-
-        recognition.onend = () => {
-          console.log("🔁 Recognition ended.");
-          if (!isRecognizing.current) {
-            try {
-              recognition.start();
-              isRecognizing.current = true;
-            } catch (e) {
-              console.warn("⚠️ Recognition restart error:", e);
-            }
-          }
-        };
-
-        recognition.start();
-        isRecognizing.current = true;
-      } catch (err) {
-        console.error("🚫 Microphone access denied or recognition setup failed:", err);
-      }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const res = await fetch("/api/save-config", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+    if (res.ok) {
+      setStatus("saved");
+      window.location.href = "/";
+    } else {
+      setStatus("error");
     }
-
-    initVoiceAgent();
-  }, []);
+  };
 
   return (
-    <main className="p-6">
-      <h1 className="text-xl font-bold mb-4">🎙️ Jess Voice Agent</h1>
-      <p>Start talking and Jess will reply...</p>
+    <main style={{ maxWidth: 600, margin: "2rem auto" }}>
+      <h1 className="text-xl font-bold mb-4">Initial Configuration</h1>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+        {Object.entries(form).map(([key, val]) => (
+          <input
+            key={key}
+            name={key}
+            value={val}
+            placeholder={key}
+            onChange={handleChange}
+            className="border p-2"
+            required={key.startsWith("ELEVENLABS") || key === "NEXT_PUBLIC_PROJECT_NAME" || key === "NEXT_PUBLIC_BACKEND_URL"}
+          />
+        ))}
+        <button className="border p-2" type="submit">
+          Save
+        </button>
+        {status === "error" && <p className="text-red-500">Failed to save configuration.</p>}
+      </form>
     </main>
   );
 }
