@@ -22,4 +22,4 @@ git branch -M main
 git push -u origin main
 ```
 
-## 2. Recommended: Enable Railway or Vercel integration from GitHub repo settings
+## 2. Recommended: Enable Render integration from GitHub repo settings
