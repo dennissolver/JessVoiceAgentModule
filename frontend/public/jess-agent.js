@@ -5,7 +5,9 @@ class JessAgent extends HTMLElement {
     const shadow = this.attachShadow({ mode: "open" });
     const btn = document.createElement("button");
     btn.textContent = "🎤 Talk to Jess";
-    btn.onclick = () => window.open("http://localhost:3000", "_blank");
+    const targetURL = window?.JESS_AGENT_URL || "http://localhost:3000";
+    btn.onclick = () => window.open(targetURL, "_blank");
+
     shadow.appendChild(btn);
   }
 }
