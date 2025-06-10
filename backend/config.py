@@ -11,8 +11,7 @@ class Settings:
     PRIMARY_LLM_PROVIDER = os.getenv("PRIMARY_LLM_PROVIDER", "groq")
     LLM_FALLBACK = os.getenv("LLM_FALLBACK", "openai")
     JESS_MODE = os.getenv("JESS_MODE", "discovery")
-    JESS_VOICE = os.getenv("JESS_VOICE", "jess")
-    ELEVENLABS_VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID", "jess")
+    ELEVENLABS_VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID")
 
 settings = Settings()
 
