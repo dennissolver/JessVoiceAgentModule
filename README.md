@@ -1,14 +1,15 @@
 # Jess Voice Chat Module
 
-This is a Railway-ready voice agent system using FastAPI, Next.js, and ElevenLabs TTS.
+Jess Voice Agent is a FastAPI + Next.js project using ElevenLabs TTS. It can run locally or on Render.
 
 ## Setup
 
 1. Clone or unzip the project.
-2. Run the environment setup wizard:
+2. (Optional) Run the console setup wizard:
    ```bash
    python setup_env.py
    ```
+When deploying to Render or another host without a terminal, start the services and visit `/setup` in the browser to provide your API keys.
 3. Start the backend:
    ```bash
    uvicorn backend.main:app --reload
@@ -30,7 +31,7 @@ This is a Railway-ready voice agent system using FastAPI, Next.js, and ElevenLab
 
 ## Deployment
 
-You can deploy the app to Railway using `railway.json`.
+The repository contains a `render.yaml` configuration for one-click deployment to Render.
 
 ## License
 
