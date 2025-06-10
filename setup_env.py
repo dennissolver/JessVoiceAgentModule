@@ -32,7 +32,9 @@ def main():
     jess_mode = prompt_env_var("JESS_MODE", "What mode is this agent in? (e.g., discovery, support)", default="discovery")
     voice_name = prompt_env_var("JESS_VOICE", "What is the ElevenLabs voice preset to use?", default="jess")
 
-    agent_id = prompt_env_var("NEXT_PUBLIC_AGENT_ID", "What is your ElevenLabs Agent ID for frontend?")
+    agent_id = prompt_env_var("NEXT_PUBLIC_ELEVENLABS_AGENT_ID", "What is your ElevenLabs Agent ID for frontend?")
+    voice_id = prompt_env_var("NEXT_PUBLIC_ELEVENLABS_VOICE_ID", "What is your ElevenLabs Voice ID for frontend?")
+    backend_url = prompt_env_var("NEXT_PUBLIC_BACKEND_URL", "What is the backend URL?", default="http://localhost:8000")
     project_name = prompt_env_var("NEXT_PUBLIC_PROJECT_NAME", "What is the project name for this deployment?", default="JessVoiceAgent")
 
     backend_env = {
@@ -47,8 +49,10 @@ def main():
     }
 
     frontend_env = {
-        "NEXT_PUBLIC_AGENT_ID": agent_id,
-        "NEXT_PUBLIC_PROJECT_NAME": project_name
+        "NEXT_PUBLIC_ELEVENLABS_AGENT_ID": agent_id,
+        "NEXT_PUBLIC_ELEVENLABS_VOICE_ID": voice_id,
+        "NEXT_PUBLIC_BACKEND_URL": backend_url,
+        "NEXT_PUBLIC_PROJECT_NAME": project_name,
     }
 
     write_env_file(".env", backend_env)
