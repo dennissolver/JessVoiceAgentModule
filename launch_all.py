@@ -4,9 +4,11 @@ import sys
 from pathlib import Path
 
 def run_setup():
-    if not Path(".env").exists():
+    if sys.stdin.isatty() and (not Path(".env").exists() or not Path(".env.local").exists()):
         print("🛠️  Running setup_env.py...")
         subprocess.run([sys.executable, "setup_env.py"])
+    elif not Path(".env").exists():
+        print("⚠️  Configuration missing. Start the services and visit /setup to provide API keys.")
 
 def run_backend():
     backend_env = os.environ.copy()
