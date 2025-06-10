@@ -5,9 +5,14 @@ import time
 import webbrowser
 
 def run_setup():
-    if not os.path.exists(".env") or not os.path.exists(".env.local"):
+     if (
+        sys.stdin.isatty()
+        and (not os.path.exists(".env") or not os.path.exists(".env.local"))
+    ):
         print("🛠️  Running setup_env.py...")
         subprocess.run([sys.executable, "setup_env.py"])
+    elif not os.path.exists(".env"):
+        print("⚠️  Configuration missing. Start the services and visit /setup to provide API keys.")
 
 def run_backend():
     print("▶️  Starting backend (FastAPI)...")
