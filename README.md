@@ -44,9 +44,9 @@ Password: admin
 
 ## Environment Variables
 
-The frontend reads the following variable from `.env.local`:
+The frontend reads the following variable from `.env.local` or your deployment environment:
 
-- `NEXT_PUBLIC_BACKEND_URL` - Base URL of the FastAPI backend used for login and configuration requests. If omitted, it defaults to `http://localhost:8000`.
+`NEXT_PUBLIC_BACKEND_URL` - Base URL of the FastAPI backend used for login and configuration requests. If omitted, the setup page falls back to `http://localhost:8000
 
 ## Deployment
 
