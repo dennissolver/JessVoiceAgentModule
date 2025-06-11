@@ -106,7 +106,15 @@ def write_env_file(path: str, values: dict):
 
 
 @app.post("/api/save-config")
-def save_config(payload: ConfigPayload, user=Depends(current_active_user)):
+def save_config(
+    payload: ConfigPayload, request: Request, user=Depends(current_active_user)
+):
+    auth_header = request.headers.get("authorization")
+    if not auth_header:
+        logger.warning("Authorization header missing for /api/save-config")
+    else:
+        logger.info("Authorization header received for /api/save-config")
+    
     backend_keys = {
         "ELEVENLABS_API_KEY": payload.ELEVENLABS_API_KEY,
         "ELEVENLABS_VOICE_ID": payload.ELEVENLABS_VOICE_ID,
