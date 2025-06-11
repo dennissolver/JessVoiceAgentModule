@@ -61,8 +61,9 @@ The repository contains a `render.yaml` configuration for one-click deployment t
 
 ### `CORS_ORIGINS`
 
-Set this environment variable on the backend to control which origins are allowed for
-CORS. Provide the URL of your frontend so the browser can communicate with the API.
+CORS. When deploying with `render.yaml`, set it to your frontend domain, for example
+`https://jessvoiceagentmodule-front-end.onrender.com`. The variable also supports a
+comma-separated list of origins, for example:
 Multiple origins can be comma-separated, for example:
 
 ```
