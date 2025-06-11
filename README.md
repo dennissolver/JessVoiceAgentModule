@@ -21,10 +21,13 @@ When deploying to Render or another host without a terminal, start the services 
    npm run dev
    ```
 5. Build the frontend for production:
+
+   If packages are missing, run `npm install` in `frontend/` before building.
    ```bash
-   npm install  # if dependencies are missing
+   cd frontend
+   npm install
    npm run build
-   ```   
+   ```
 
 ## Authentication
 
