@@ -15,7 +15,7 @@ export default function SetupPage() {
     PRIMARY_LLM_PROVIDER: "groq",
     LLM_FALLBACK: "",
     NEXT_PUBLIC_PROJECT_NAME: "JessVoiceAgent",
-    NEXT_PUBLIC_BACKEND_URL: "http://localhost:8000",
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
   });
   const [status, setStatus] = useState<string | null>(null);
 
