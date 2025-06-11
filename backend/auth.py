@@ -2,7 +2,7 @@ from typing import Optional
 import uuid
 
 from fastapi import Depends
-from fastapi_users import FastAPIUsers, models, schemas
+from fastapi_users import FastAPIUsers, manager, schemas
 from fastapi_users.authentication import (
     CookieTransport,
     AuthenticationBackend,
