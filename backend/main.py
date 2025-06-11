@@ -1,6 +1,16 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from auth import (
+    fastapi_users,
+    auth_backend,
+    current_active_user,
+    UserRead,
+    UserCreate,
+    UserUpdate,
+    create_db_and_admin,
+)
+import asyncio
 from config import settings
 from llm_router import query_llm
 from tts import speak
@@ -9,6 +19,7 @@ from jess_chat.memory import update_memory
 import os
 
 app = FastAPI()
+asyncio.run(create_db_and_admin())
 
 origins_env = os.getenv("CORS_ORIGINS", "*")
 origins = [o.strip() for o in origins_env.split(",") if o.strip()]
@@ -19,6 +30,22 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+)
+
+app.include_router(
+    fastapi_users.get_auth_router(auth_backend),
+    prefix="/auth/jwt",
+    tags=["auth"],
+)
+app.include_router(
+    fastapi_users.get_register_router(UserRead, UserCreate),
+    prefix="/auth",
+    tags=["auth"],
+)
+app.include_router(
+    fastapi_users.get_users_router(UserRead, UserUpdate),
+    prefix="/users",
+    tags=["users"],
 )
 
 class ChatRequest(BaseModel):
@@ -65,7 +92,7 @@ def write_env_file(path: str, values: dict):
 
 
 @app.post("/api/save-config")
-def save_config(payload: ConfigPayload):
+def save_config(payload: ConfigPayload, user=Depends(current_active_user)):
     backend_keys = {
         "ELEVENLABS_API_KEY": payload.ELEVENLABS_API_KEY,
         "ELEVENLABS_VOICE_ID": payload.ELEVENLABS_VOICE_ID,
