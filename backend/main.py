@@ -31,6 +31,7 @@ async def startup() -> None:
 
 origins_env = os.getenv("CORS_ORIGINS", "*")
 origins = [o.strip() for o in origins_env.split(",") if o.strip()]
+logger.info("CORS origins: %s", origins)
 
 app.add_middleware(
     CORSMiddleware,
