@@ -5,7 +5,7 @@ from fastapi import Depends
 from fastapi_users import FastAPIUsers, schemas
 from fastapi_users.manager import BaseUserManager
 from fastapi_users.authentication import (
-    CookieTransport,
+    BearerTransport, 
     AuthenticationBackend,
     JWTStrategy,
 )
@@ -60,7 +60,7 @@ def get_jwt_strategy() -> JWTStrategy:
 
 auth_backend = AuthenticationBackend(
     name="jwt",
-    transport=cookie_transport,
+    transport=bearer_transport,
     get_strategy=get_jwt_strategy,
 )
 
