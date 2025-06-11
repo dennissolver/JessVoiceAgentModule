@@ -52,7 +52,7 @@ class UserManager(BaseUserManager[User, uuid.UUID]):
 async def get_user_manager(user_db=Depends(get_user_db)):
     yield UserManager(user_db)
 
-cookie_transport = CookieTransport(cookie_name="auth", cookie_max_age=3600)
+bearer_transport = BearerTransport(tokenUrl="auth/jwt/login")
 SECRET = "SECRET"
 
 def get_jwt_strategy() -> JWTStrategy:
