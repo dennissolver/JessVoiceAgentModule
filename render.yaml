@@ -9,7 +9,7 @@ services:
       - key: PORT
         value: 8000
       - key: CORS_ORIGINS
-        value: https://jessvoiceagentmodule-front-end.onrender.com
+        value: "https://jessvoiceagentmodule-front-end.onrender.com"
 
   - type: web
     name: jess-frontend
