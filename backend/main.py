@@ -1,5 +1,7 @@
-from fastapi import FastAPI, Request, Depends
+from fastapi import FastAPI, Request, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+import logging
+from fastapi import FastAPI, Request, Depends, HTTPException
 from pydantic import BaseModel
 from auth import (
     fastapi_users,
@@ -16,6 +18,9 @@ from tts import speak
 from jess_chat.discovery_agent import handle_discovery_prompt
 from jess_chat.memory import update_memory
 import os
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
@@ -90,9 +95,13 @@ def chat(data: ChatRequest):
     return {"reply": response, "audio": audio_base64}
 
 def write_env_file(path: str, values: dict):
-    with open(path, "w") as f:
-        for k, v in values.items():
-            f.write(f"{k}={v}\n")
+    try:
+        with open(path, "w") as f:
+            for k, v in values.items():
+                f.write(f"{k}={v}\n")
+    except Exception as e:
+        logger.exception("Failed to write %s", path)
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.post("/api/save-config")
@@ -115,8 +124,14 @@ def save_config(payload: ConfigPayload, user=Depends(current_active_user)):
         "NEXT_PUBLIC_ELEVENLABS_VOICE_ID": payload.ELEVENLABS_VOICE_ID,
     }
 
-    write_env_file(".env", backend_keys)
-    write_env_file(".env.local", frontend_keys)
+    try:
+        write_env_file(".env", backend_keys)
+        write_env_file(".env.local", frontend_keys)
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.exception("Failed to save config")
+        raise HTTPException(status_code=500, detail=str(e))
     return {"status": "saved"}
 
 
