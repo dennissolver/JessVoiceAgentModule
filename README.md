@@ -23,8 +23,10 @@ When deploying to Render or another host without a terminal, start the services 
 
 ## Authentication
 
-The backend now uses **FastAPI Users** with a default admin account. Access the
-setup page after logging in at `/login` with:
+The backend uses **FastAPI Users** with bearer-token authentication. Log in at
+`/login` and store the returned `access_token`. Include
+`Authorization: Bearer <token>` when calling protected endpoints such as
+`/api/save-config`. The default admin credentials are:
 
 ```
 Email: admin@example.com
