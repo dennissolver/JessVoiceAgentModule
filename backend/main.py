@@ -10,7 +10,6 @@ from auth import (
     UserUpdate,
     create_db_and_admin,
 )
-import asyncio
 from config import settings
 from llm_router import query_llm
 from tts import speak
@@ -19,7 +18,11 @@ from jess_chat.memory import update_memory
 import os
 
 app = FastAPI()
-asyncio.run(create_db_and_admin())
+
+
+@app.on_event("startup")
+async def startup() -> None:
+    await create_db_and_admin()
 
 origins_env = os.getenv("CORS_ORIGINS", "*")
 origins = [o.strip() for o in origins_env.split(",") if o.strip()]
