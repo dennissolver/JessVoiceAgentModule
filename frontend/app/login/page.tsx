@@ -31,6 +31,7 @@ export default function LoginPage() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
           className="border p-2"
+          autoComplete="email"
         />
         <input
           type="password"
@@ -38,6 +39,8 @@ export default function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           className="border p-2"
+          autoComplete="current-password"
+          
         />
         <button className="border p-2" type="submit">
           Login
