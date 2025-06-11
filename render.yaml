@@ -18,3 +18,5 @@ services:
     envVars:
       - key: PORT
         value: 3000
+      - key: NEXT_PUBLIC_BACKEND_URL
+        value: https://jessvoiceagentmodule.onrender.com
