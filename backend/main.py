@@ -1,7 +1,6 @@
 from fastapi import FastAPI, Request, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import logging
-from fastapi import FastAPI, Request, Depends, HTTPException
 from pydantic import BaseModel
 from auth import (
     fastapi_users,
