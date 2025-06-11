@@ -59,6 +59,15 @@ The frontend reads the following variable from `.env.local` or your deployment e
 
 The repository contains a `render.yaml` configuration for one-click deployment to Render.
 
+### `CORS_ORIGINS`
+
+Set this environment variable on the backend to control which origins are allowed for
+CORS. Provide the URL of your frontend so the browser can communicate with the API.
+Multiple origins can be comma-separated, for example:
+
+```
+CORS_ORIGINS=https://example.com,https://other.com
+```
 ## License
 
 MIT
