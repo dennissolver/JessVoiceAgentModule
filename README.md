@@ -44,7 +44,7 @@ Password: admin
 
 ## Environment Variables
 
-The frontend expects a `.env.local` file with the following variable:
+The frontend reads the following variable from `.env.local`:
 
 - `NEXT_PUBLIC_BACKEND_URL` - Base URL of the FastAPI backend used for login and configuration requests.
 
