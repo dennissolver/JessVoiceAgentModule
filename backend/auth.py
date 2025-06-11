@@ -2,7 +2,8 @@ from typing import Optional
 import uuid
 
 from fastapi import Depends
-from fastapi_users import FastAPIUsers, manager, schemas
+from fastapi_users import FastAPIUsers, schemas
+from fastapi_users.manager import BaseUserManager
 from fastapi_users.authentication import (
     CookieTransport,
     AuthenticationBackend,
@@ -41,7 +42,7 @@ async def get_async_session() -> AsyncSession:
 async def get_user_db(session: AsyncSession = Depends(get_async_session)):
     yield SQLAlchemyUserDatabase(session, User)
 
-class UserManager(manager.BaseUserManager[User, uuid.UUID]):
+class UserManager(BaseUserManager[User, uuid.UUID]):
     reset_password_token_secret = "SECRET"
     verification_token_secret = "SECRET"
 
