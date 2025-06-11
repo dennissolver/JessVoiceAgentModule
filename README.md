@@ -26,7 +26,9 @@ When deploying to Render or another host without a terminal, start the services 
 The backend uses **FastAPI Users** with bearer-token authentication. Log in at
 `/login` and store the returned `access_token`. Include
 `Authorization: Bearer <token>` when calling protected endpoints such as
-`/api/save-config`. The default admin credentials are:
+`/api/save-config`. If the backend responds with `401 Unauthorized`, the
+frontend clears the saved token and redirects to `/login`.
+The default admin credentials are:
 
 ```
 Email: admin@example.com
