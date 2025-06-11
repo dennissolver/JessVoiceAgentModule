@@ -21,6 +21,17 @@ When deploying to Render or another host without a terminal, start the services 
    npm run dev
    ```
 
+## Authentication
+
+The backend now uses **FastAPI Users** with a default admin account. Access the
+setup page after logging in at `/login` with:
+
+```
+Email: admin@example.com
+Password: admin
+```
+
+
 ## Features
 
 - ElevenLabs Text-to-Speech
