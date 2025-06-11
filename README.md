@@ -53,7 +53,7 @@ Password: admin
 
 The frontend reads the following variable from `.env.local` or your deployment environment:
 
-`NEXT_PUBLIC_BACKEND_URL` - Base URL of the FastAPI backend used for login and configuration requests. If omitted, the setup page falls back to `http://localhost:8000
+`NEXT_PUBLIC_BACKEND_URL` - Base URL of the FastAPI backend used for login and configuration requests. If omitted, the setup page falls back to `http://localhost:8000`.
 
 ## Deployment
 
@@ -64,7 +64,6 @@ The repository contains a `render.yaml` configuration for one-click deployment t
 CORS. When deploying with `render.yaml`, set it to your frontend domain, for example
 `https://jessvoiceagentmodule-front-end.onrender.com`. The variable also supports a
 comma-separated list of origins, for example:
-Multiple origins can be comma-separated, for example:
 
 ```
 CORS_ORIGINS=https://example.com,https://other.com
