@@ -35,6 +35,7 @@ def main():
     agent_id = prompt_env_var("NEXT_PUBLIC_ELEVENLABS_AGENT_ID", "What is your ElevenLabs Agent ID for frontend?")
     voice_id = prompt_env_var("NEXT_PUBLIC_ELEVENLABS_VOICE_ID", "What is your ElevenLabs Voice ID for frontend?")
     backend_url = prompt_env_var("NEXT_PUBLIC_BACKEND_URL", "What is the backend URL?", default="https://jessvoiceagentmodule.onrender.com")
+    agent_url = prompt_env_var("NEXT_PUBLIC_JESS_AGENT_URL", "What is the public URL of the Jess interface?", optional=True)
     project_name = prompt_env_var("NEXT_PUBLIC_PROJECT_NAME", "What is the project name for this deployment?", default="JessVoiceAgent")
 
     backend_env = {
@@ -52,6 +53,7 @@ def main():
         "NEXT_PUBLIC_ELEVENLABS_AGENT_ID": agent_id,
         "NEXT_PUBLIC_ELEVENLABS_VOICE_ID": voice_id,
         "NEXT_PUBLIC_BACKEND_URL": backend_url,
+        "NEXT_PUBLIC_JESS_AGENT_URL": agent_url,
         "NEXT_PUBLIC_PROJECT_NAME": project_name,
     }
 
