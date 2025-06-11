@@ -72,6 +72,7 @@ class ConfigPayload(BaseModel):
     LLM_FALLBACK: str | None = None
     NEXT_PUBLIC_PROJECT_NAME: str
     NEXT_PUBLIC_BACKEND_URL: str
+    NEXT_PUBLIC_JESS_AGENT_URL: str | None = None
 
 @app.get("/")
 def root():
