@@ -34,7 +34,7 @@ export default function SetupPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-    const res = await fetch(`${form.NEXT_PUBLIC_BACKEND_URL}/api/save-config`, { 
+    const res = await fetch(`${form.NEXT_PUBLIC_BACKEND_URL}/api/save-config`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,6 +46,10 @@ export default function SetupPage() {
       setStatus("saved");
       window.location.href = "/";
     } else {
+      if (res.status === 401) {
+        localStorage.removeItem("token");
+        router.push("/login");
+      } 
       setStatus("error");
     }
   };
