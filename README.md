@@ -68,6 +68,19 @@ comma-separated list of origins, for example:
 ```
 CORS_ORIGINS=https://example.com,https://other.com
 ```
+
+#### Verify CORS setup
+
+When the backend starts it logs the configured origins. Look for a line like
+`CORS origins: [...]` in the startup output to confirm that `CORS_ORIGINS` was
+loaded. You can also check that responses include the header by running:
+
+```bash
+curl -I <backend>/api/save-config
+```
+
+The output should contain `Access-Control-Allow-Origin`.
+
 ## License
 
 MIT
