@@ -40,6 +40,12 @@ Password: admin
 - Configurable via `.env` and `.env.local`
 - Embeddable widget in `public/jess-agent.js`
 
+## Environment Variables
+
+The frontend expects a `.env.local` file with the following variable:
+
+- `NEXT_PUBLIC_BACKEND_URL` - Base URL of the FastAPI backend used for login and configuration requests.
+
 ## Deployment
 
 The repository contains a `render.yaml` configuration for one-click deployment to Render.
