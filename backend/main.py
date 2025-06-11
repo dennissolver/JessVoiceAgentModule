@@ -29,7 +29,7 @@ origins = [o.strip() for o in origins_env.split(",") if o.strip()]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=jessvoiceagentmodule-front-end.onrender.com
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
