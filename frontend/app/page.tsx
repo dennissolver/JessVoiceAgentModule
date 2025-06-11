@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 export default function SetupPage() {
   const router = useRouter();
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
   const [form, setForm] = useState({
     ELEVENLABS_API_KEY: "",
     ELEVENLABS_VOICE_ID: "",
@@ -14,8 +15,8 @@ export default function SetupPage() {
     ANTHROPIC_API_KEY: "",
     PRIMARY_LLM_PROVIDER: "groq",
     LLM_FALLBACK: "",
-    NEXT_PUBLIC_PROJECT_NAME: "JessVoiceAgent",
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+    NEXT_PUBLIC_PROJECT_NAME: "JessVoiceAgent",    
+    NEXT_PUBLIC_BACKEND_URL: backendUrl,
   });
   const [status, setStatus] = useState<string | null>(null);
 
