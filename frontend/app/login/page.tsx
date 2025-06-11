@@ -6,9 +6,22 @@ export default function LoginPage() {
   const [password, setPassword] = useState("admin");
   const [error, setError] = useState<string | null>(null);
 
+
+  const backendUrl =
+    process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+
+  if (!backendUrl) {
+    return (
+      <main style={{ maxWidth: 400, margin: "2rem auto" }}>
+        <p className="text-red-500">Backend URL is not configured.</p>
+      </main>
+    );
+  }
+  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/jwt/login`, {
+    const res = await fetch(`${backendUrl}/auth/jwt/login`, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({ username: email, password }),
