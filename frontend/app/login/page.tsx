@@ -8,7 +8,7 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:8000/auth/jwt/login", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/jwt/login`, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({ username: email, password }),
