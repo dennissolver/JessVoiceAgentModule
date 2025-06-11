@@ -36,6 +36,9 @@ The backend uses **FastAPI Users** with bearer-token authentication. Log in at
 `Authorization: Bearer <token>` when calling protected endpoints such as
 `/api/save-config`. If the backend responds with `401 Unauthorized`, the
 frontend clears the saved token and redirects to `/login`.
+The backend logs a warning when this endpoint is called without an
+`Authorization` header to help debug login issues.
+
 The default admin credentials are:
 
 ```
