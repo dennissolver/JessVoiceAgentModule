@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function SetupPage() {
+  const router = useRouter();
   const [form, setForm] = useState({
     ELEVENLABS_API_KEY: "",
     ELEVENLABS_VOICE_ID: "",
@@ -17,15 +19,26 @@ export default function SetupPage() {
   });
   const [status, setStatus] = useState<string | null>(null);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/login");
+    }
+  }, [router]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch(`${form.NEXT_PUBLIC_BACKEND_URL}/api/save-config`, {  
+    const token = localStorage.getItem("token");
+    const res = await fetch(`${form.NEXT_PUBLIC_BACKEND_URL}/api/save-config`, { 
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token ? `Bearer ${token}` : "",
+      },
       body: JSON.stringify(form),
     });
     if (res.ok) {
